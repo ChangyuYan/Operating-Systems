@@ -1,0 +1,69 @@
+NAME: Changyu YanEMAIL: changyuyan@g.ucla.eduID: 304566451SLIPDAYS: 0
+
+***************************
+Credits: 
+- The template for getopt_long is from the official gnu website:
+https://www.gnu.org/software/libc/manual/html_node/Getopt-Long-Option-Example.html#Getopt-Long-Option-Example
+
+
+***************************
+SmokeTest:
+
+1. First, I check for the catch test. 
+
+	@./lab0 --segfault --catch > a.out 2>&1 /dev/null; \
+	if [ $$? -ne 4 ]; then \
+	  echo "ERROR: RETURN SHOULD BE 4 FOR --catch"; \
+	  exit 1; \
+	fi
+
+
+The return value should be 4
+if there is a segfault and we succesfully catch it
+
+2. Then I check for input and output. 
+	
+	@echo "Hello World" > new.txt; \
+	./lab0 --input=new.txt --output=nnew.txt; \
+	if [ $$? -ne 0 ]; then \
+	  echo "ERROR: RETURN SHOULD BE 0"; \
+	  exit 1; \
+	fi
+
+If we read from an input file
+and then write to an output file, first of all, the return value
+should be 0. 
+
+3. Then we check the difference between the input and output file.
+
+	@$(diff new.txt nnew.txt) > DIFF.txt; \
+	if [ -s DIFF.txt ]; then \
+	  echo "ERROR: Input and Output files are not the same!"; \
+	  exit 1; \
+	fi
+
+If everything is implemented correctly, $diff should output nothing.
+Otherwise, it would mean that we have not implemented input and output
+correctly. 
+
+4. We also want to make sure that we can open an input file if only it exits. 
+	
+	@rm -f new.txt nnew.txt; \
+	./lab0 --input=null.txt --output=nnew.txt > a.out 2>&1 /dev/null; \
+	if [ $$? -ne 2 ]; then \
+	  echo "ERROR: RETURN SHOULD BE 2"; \
+	  exit 1; \
+	fi
+
+So we check the return value for that, which should be 2. 
+
+5. We also want to make sure that, if output file has no write permission, 
+we cannot write to it and should return a 3. 
+	@echo "Hello World" > new.txt; \
+	touch nnew.txt; \
+	chmod -w nnew.txt; \
+	./lab0 --input=new.txt --output=nnew.txt > a.out 2>&1 /dev/null; \
+	if [ $$? -ne 3 ]; then \
+	  echo "ERROR: RETURN SHOULD BE 3"; \
+	  exit 1; \
+	fi
