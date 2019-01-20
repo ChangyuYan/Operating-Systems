@@ -1,0 +1,24 @@
+NAME: Changyu Yan
+EMAIL: changyuyan@g.ucla.edu
+ID: 304566451
+SLIPDAYS: 0
+
+
+
+***************************
+Credits: 
+- The template for getopt_long is from the official gnu website:
+https://www.gnu.org/software/libc/manual/html_node/Getopt-Long-Option-Example.html#Getopt-Long-Option-Example
+
+- For character-at-a-time mode, the template is also from the official GNU website:
+https://www.gnu.org/software/libc/manual/html_node/Noncanon-Example.html
+
+
+Deliverables: 
+
+- README 
+- Makefile
+- lab1a.c
+	- Character-at-a-time, full duplex terminal I/O	- Polled I/O and passing input and output between two processes
+
+
